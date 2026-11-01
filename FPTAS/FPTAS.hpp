@@ -6,14 +6,14 @@
 #include <vector>
 
 // Represents an item in the knapsack problem.
-struct Item {
+struct FTPASItem {
     int weight;
     int value;
 };
 
 // Finds an approximate solution using the FPTAS algorithm.
 std::vector<int> knapsackFPTAS(
-    const std::vector<Item>& items,
+    const std::vector<FPTASItem>& items,
     int capacity,
     double epsilon
 );

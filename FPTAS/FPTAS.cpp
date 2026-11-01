@@ -2,7 +2,7 @@
 #include <cmath>
 #include <climits>
 
-std::vector<int> knapsackFPTAS(const std::vector<Item>& items, int capacity, double epsilon) {
+std::vector<int> knapsackFPTAS(const std::vector<FPTASItem>& items, int capacity, double epsilon) {
 
     // Check that the input parameters are valid.
     if (epsilon <= 0 || epsilon >= 1 || capacity < 0) {
