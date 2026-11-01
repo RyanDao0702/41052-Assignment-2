@@ -13,7 +13,7 @@ int main () {
     //I write column names first, so it is easier to read the data later
     //n = number of items; run = batch number (each batch run Greedy 100 times); time_ms = average time per call
     //total_value = value returned by the Greedy algorithm
-    csv << "n,run, dp_time, greedy_time, fptas_time, dp_value, greedy_value, fptas_value" << std::endl;
+    csv << "n,run, dp_time, greedy_time, fptas_time, dp_value, greedy_value, fptas_value, epsilon" << std::endl;
 
     //I want to see how the runtime changes as the number of items increases
     //I will test the same Greedy function with each of these five input sizes
@@ -123,7 +123,7 @@ int main () {
             end = std::chrono::steady_clock::now();
             double totalTimeMilisecondsFPTAS = std::chrono::duration<double, std::milli>(end - start).count();
 
-            double averageTimeMilisecondsFPTAS = totalTimeMilisconds / 100.0;
+            double averageTimeMilisecondsFPTAS = totalTimeMilisecondsFPTAS / 100.0;
 
             int fptasTotalValue = 0;
 
@@ -136,7 +136,7 @@ int main () {
             //and create graphs without manually copying numbers from the terminal
             csv << n << "," << run << "," << 
             averageTimeMilisecondsDP << "," << averageTimeMilisecondsGreedy << "," << averageTimeMilisecondsFPTAS << ","
-            << dpResult.totalValue << "," << greedyResult.totalValue << "," << fptasTotalValue << "," << "epsilon" << "\n";
+            << dpResult.totalValue << "," << greedyResult.totalValue << "," << fptasTotalValue << "," << epsilon << "\n";
         }
         
         //I print only after all 10 batches for this size are finished
