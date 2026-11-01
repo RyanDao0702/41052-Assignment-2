@@ -5,6 +5,7 @@
 #include "DP\DPKnapsack.hpp"
 #include <fstream>
 #include <random>
+#include "FPTAS\FPTAS.hpp"
 
 int main () {
     //I create a CSV file (Excel) so my team can see the raw timing result
@@ -13,7 +14,7 @@ int main () {
     //I write column names first, so it is easier to read the data later
     //n = number of items; run = batch number, time_ms = average time per call
     //value = value returned by the corresponding algorithm
-    csv << "n,c,run,dp_time,greedy_time,dp_value,greedy_value" << std::endl;
+    csv << "n,c,run,dp_time,greedy_time,fptas_time,dp_value,greedy_value, fptas_value,epsilon" << std::endl;
 
     //Use a fixed seed for randomly generating numbers to make each run of the benchmark the same (for comparing benchmarks)
     std::mt19937 gen(42);
@@ -45,6 +46,7 @@ int main () {
             std::vector<Item> items;
             std::vector<int> itemValues;
             std::vector<int> itemWeights;
+            std::vector<FPTASItem> fptasItems;
 
     
             //Weights and be randomised between 1 and the capacity
@@ -66,6 +68,7 @@ int main () {
                 items.push_back({i, weight, value});
                 itemValues.push_back(value);
                 itemWeights.push_back(weight);
+                fptasItems.push_back({ weight, static_cast<int>(value) });
             } 
             
 
@@ -74,6 +77,8 @@ int main () {
             //use result to keep the max value from the latest call
             GreedyResult greedyResult;
             DPResult dpResult;
+            std::vector<int> fptasResult;
+            double epsilon = 0.2;
 
             //start the clock immediately before the measured calls
             auto start = std::chrono::steady_clock::now();
@@ -106,12 +111,28 @@ int main () {
             
             double averageTimeMilisecondsDP= totalTimeMilisconds / 10.0;
 
+            //repeat with FPTAS
+            start = std::chrono::steady_clock::now();
+            for (int i = 0; i < 10; i++) {
+                fptasResult = knapsackFPTAS(fptasItems, capacity, epsilon);
+            }
+            end = std::chrono::steady_clock::now();
+            double totalTimeMilisecondsFPTAS = std::chrono::duration<double, std::milli>(end - start).count();
+
+            double averageTimeMilisecondsFPTAS = totalTimeMilisecondsFPTAS / 10.0;
+
+            int fptasTotalValue = 0;
+
+            for (int index : fptasResult) {
+                fptasTotalValue += fptasItems[index].value;
+            }
+
             // I save one CSV row for this batch
             //Later, my team can calculate the median and variation for each size
             //and create graphs without manually copying numbers from the terminal
             csv << n << "," << c << "," << run << "," << 
-            averageTimeMilisecondsDP << "," << averageTimeMilisecondsGreedy << ","
-            << dpResult.totalValue << "," << greedyResult.totalValue << "\n";
+            averageTimeMilisecondsDP << "," << averageTimeMilisecondsGreedy << "," << averageTimeMilisecondsFPTAS << ","
+            << dpResult.totalValue << "," << greedyResult.totalValue << "," << fptasTotalValue << "\n";
     
 
         }

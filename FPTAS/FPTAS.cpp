@@ -11,7 +11,7 @@ std::vector<int> knapsackFPTAS(const std::vector<FPTASItem>& items, int capacity
 
     int maxValue = 0; //initialise the start value
 
-    for (int i = 0; i < items.size(); i++) { //check each item
+    for (std::size_t i = 0; i < items.size(); i++) { //check each item
         if (items[i].weight <= capacity) { //ignore if the item cant fit
             if (items[i].value > maxValue) {
                 maxValue = items[i].value; //update largest value
@@ -27,7 +27,7 @@ std::vector<int> knapsackFPTAS(const std::vector<FPTASItem>& items, int capacity
 
     std::vector<int> scaledValues(items.size(), 0); //scale values
 
-    for (int i = 0; i < items.size(); i++) { //for each item
+    for (std::size_t i = 0; i < items.size(); i++) { //for each item
         if (items[i].weight <= capacity && items[i].value > 0) {
             scaledValues[i] = static_cast<int>( //use scaling factor so that the DP doesn't need to handle the full original values
                 std::floor(items[i].value / K) //round down to the nearest integer
@@ -37,7 +37,7 @@ std::vector<int> knapsackFPTAS(const std::vector<FPTASItem>& items, int capacity
 
     int totalScaledValue = 0; //initialise total scaled value
 
-    for (int i = 0; i < items.size(); i++) {
+    for (std::size_t i = 0; i < items.size(); i++) {
         if (items[i].weight <= capacity) { //calculate the largest possible sum of scaled values if every item is included individually
             totalScaledValue += scaledValues[i];
         }
@@ -66,7 +66,7 @@ std::vector<int> knapsackFPTAS(const std::vector<FPTASItem>& items, int capacity
     //use item.size() + 1 because row 0 will be when no items are considered similarly totalScaledValue + 1 needs to represent every scaled value including 0
     dp[0][0] = 0; //set initial value to 0 when 0 items are considered
 
-    for (int i = 1; i <= items.size(); i++) { //loop through each item for processing
+    for (std::size_t i = 1; i <= items.size(); i++) { //loop through each item for processing
         int weight = items[i - 1].weight; //use i - 1 because dp table starts at row 0 but the item vector starts at index 0
         int value = scaledValues[i - 1]; //store the wegiht and value in variables  
 
@@ -106,7 +106,7 @@ std::vector<int> knapsackFPTAS(const std::vector<FPTASItem>& items, int capacity
 
     int v = bestValue;
 
-    for (int i = items.size(); i > 0; i--) { //loop backwards through the items to retrace each scaled value to the original value
+    for (std::size_t i = items.size(); i > 0; i--) { //loop backwards through the items to retrace each scaled value to the original value
 
         if (dp[i][v] != dp[i - 1][v]) { //if the values are not the same then it was an item that was selected 
 

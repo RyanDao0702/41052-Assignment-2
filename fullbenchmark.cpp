@@ -3,7 +3,7 @@
 #include <vector>
 #include "greedy.h"
 #include "DP\DPKnapsack.hpp"
-#include "FPTAS.hpp"
+#include "FPTAS\FPTAS.hpp"
 #include <fstream>
 
 int main () {
