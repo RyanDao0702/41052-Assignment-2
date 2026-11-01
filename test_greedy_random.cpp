@@ -170,7 +170,7 @@ int main() {
 
             //I multiply by 100 to show a percentage instead of a decimal
             //I only print this line once for each test
-            std::cout << "Test " << testNum << " - Quality Ratio: " << ratio * 100 << "%" << std::endl;
+            std::cout << "Test " << testNum << " -Ratio: " << ratio * 100 << "%" << std::endl;
         }
     }
     
@@ -182,13 +182,13 @@ int main() {
 
         // I print the average and worst quality ratios.
         // I multiply by 100 to show them as percentages.
-        std::cout << "Average Quality Ratio: " << averageRatio * 100 << "%" << std::endl;
+        std::cout << "Average Ratio: " << averageRatio * 100 << "%" << std::endl;
 
-        std::cout << "Worst Quality Ratio: " << lowestRatio * 100 << "%" << std::endl;
+        std::cout << "Lowest Ratio: " << lowestRatio * 100 << "%" << std::endl;
     }
 
     // I print how many times Greedy found the optimal value.
-    std::cout << "Optimal Solutions Found: " << bestCount << " / 100" << std::endl;
+    std::cout << "Optimal Solutions: " << bestCount << " / 100" << std::endl;
 
     //I only reach this line if none of the validity checks failed
     std::cout << "All 100 random tests: Pass" << std::endl;
