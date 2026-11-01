@@ -120,5 +120,111 @@ int main() {
     if (notDuplicates) {
         std::cout << "No duplicate selected IDs" << std::endl;
     }
+
+
+
+    //I test what happens when there are no items
+    //Greedy should return 0 values, 0 weights
+    //and an empty list of chosen items
+    std::vector<Item> emptyBag;
+    GreedyResult emptyResult = greedyKnapsack(emptyBag, 10);
+
+    if (emptyResult.totalValue == 0 && emptyResult.totalWeight == 0 && emptyResult.chosenItems.empty()) {
+        std::cout << "Empty input test: Pass" << std::endl;
+    } else {
+        std::cout << "Empty input test: Fail" << std::endl;
+        return 1;
+    }
+    //Now I want to test what happens when the capacity is 0
+    //Although there are items, but there is nothing fit
+    //I expect the total value and weight to be 0
+    //The list of chosen items should also be empty
+    std::vector<Item> noCapacityItems = {{1,2,100}, {2,3,200}, {3,1,50}};
+
+    GreedyResult noResult = greedyKnapsack(noCapacityItems, 0);
+
+    if (noResult.totalValue == 0 && noResult.totalWeight == 0 && noResult.chosenItems.empty()) {
+        std::cout << "No capacity test: Pass" << std::endl;
+    } else {
+        std::cout << "No capacity test: Fail" << std::endl;
+        return 1;
+    }
+
+    //I want to check that my Greedy function does not accept an item
+    //whoose weight is 0. In my implementation, every item must have a weight > 0 
+    //The first item below has weight 0 on purpose. The second item is normal, so I can check that one bad item is enough to reject 
+    //the input
+    std::vector<Item> noWeightItems = {{1,0,100}, {2,3,200}};
+
+    //I initialise with false since Greedy has not rejected the input yet
+    //I will change this to true only if Greedy reports the error
+    //that I expect
+    bool noWeightRejected = false;
+
+    //I put the call inside try because I expect it may throw an error
+    //If the input is rejected, Greedy uses throw to report the problem
+    //When that happens, normal execution of the try block stops,
+    //and C++ looks for a matching catch block below
+    try {
+        //I intentionally give Greedy an invalid item (Weight 0)
+        //The capacity is 5, but capacity is not the problem here
+        //This test is only checking whether invalid weight is rejected
+        greedyKnapsack(noWeightItems, 5);
+    } catch (const std::invalid_argument&) {
+        //This catch runs only when an std::invalid_argument error
+        //is thrown from the try block
+        //I do not give the error a name because I do not
+        //need to read its message in this test
+        //Reaching this line means Greedy rejected the bad input
+        //using the error type I expected
+        noWeightRejected = true; 
+    }
+
+    //If Greedy threw the correct error, the variable is now true
+    //I print Pass because the input validation worked as expected
+    if (noWeightRejected) {
+        std::cout << "No weight test: Pass" << std::endl;
+    } else {
+        //If the variable is still false, Greedy did not throw
+        //std::invalid_argument as expected, so this test fails
+        std::cout << "No weight test: Fail" << std::endl;
+        //I return 1 to stop this test and report the failure
+        //Returning 0 would normally tell the system the program 
+        //finished successfully, so I do not use return 0 when a test fails
+        return 1;
+    }
+
+    //I test items that all have the same value density
+    //For instance, 
+    //Item 1: 20/2 = 10
+    //Item 2: 30/3=10
+    //Item 3: 40/4=10
+    //Greedy should consider the item with the smaller ID first
+    //For example, with the capacity 5, I expect items 1 and 2 to be chosen
+    std::vector<Item> equalDensityItems = {{1,2,20}, {2,3,30}, {3,4,40}};
+
+    //I use capacity capacity 5 for this for this test
+    //Greedy should first choose item 1 (weight 2, value 20)
+    //The remaining capacity is then 3
+    //It should next choose Item 2 (weight 3, value 30)
+    //The remaining capacity becomes 0, so Item 3 cannot fit
+    GreedyResult equalResult = greedyKnapsack(equalDensityItems, 5);
+
+    //I check all three expected results, not just the total value
+    //totalValue must be 20 + 30 = 50
+    //totalWeight must be 2 + 3 =5
+    //chosenItems must contain item 1 followed by item 2
+    //std::vector<int>{1,2} is the exact list I expect
+    //IDs in the same order 
+    if (equalResult.totalValue == 50 && equalResult.totalWeight == 5 && equalResult.chosenItems == std::vector<int>{1,2}) {
+        std::cout << "Equal density test: Pass" << std::endl;
+    } else {
+        std::cout << "Equal density test: Fail" << std::endl;
+        return 1;
+    }
+
+
+
+
     return 0;
 }
