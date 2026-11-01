@@ -16,7 +16,7 @@ int main () {
     csv << "n,run, dp_time, greedy_time, fptas_time, dp_value, greedy_value, fptas_value, epsilon" << std::endl;
 
     //I want to see how the runtime changes as the number of items increases
-    //I will test the same Greedy function with each of these five input sizes
+    //I use the same input sizes to compare Greedy, DP, and FPTAS
     std::vector<int> sizes = {100, 500, 1000, 5000, 10000};
 
     //I repeat the full benchmark for every size in the list above
