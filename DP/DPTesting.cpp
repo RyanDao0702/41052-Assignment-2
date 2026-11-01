@@ -20,12 +20,12 @@ void testKnapsack(
     int capacity,
     int expected
 ) {
-    int result = knapsack(weights, values, capacity);
-    std::vector<int> itemIndices = knapsackItems(weights, values, capacity);
+    DPResult result = dpKnapsack(weights, values, capacity);
+
 
     std::cout << "Knapsack Test\n Weights " << vectorToString(weights) << " Values " << vectorToString(values) << " Capacity: " << capacity << '\n';
-    std::cout << "Expected: " << expected << ". Got: " << result << '\n';
-    std::cout << "Took items: " << vectorToString(itemIndices) << '\n';
+    std::cout << "Expected: " << expected << ". Got: " << result.totalValue << '\n';
+    std::cout << "Took items: " << vectorToString(result.chosenItems) << '\n';
 
 }
 
