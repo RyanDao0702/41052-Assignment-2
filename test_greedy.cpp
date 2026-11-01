@@ -223,8 +223,20 @@ int main() {
         return 1;
     }
 
+    
+    // I test a case where Greedy does not find the best answer.
+    // Item 1 has a higher value density, so Greedy picks it first.
+    // But Item 2 alone gives a much higher total value.
+    // This is a limitation of Greedy
+    std::vector<Item> hardItems = {{1, 1, 2}, {2, 10, 19}};
 
+    GreedyResult hardAnswer = greedyKnapsack(hardItems, 10);
 
-
+    if (hardAnswer.totalValue == 2 && hardAnswer.totalWeight == 1 && hardAnswer.chosenItems == std::vector<int>{1}) {
+        std::cout << "Greedy limitation test: Pass" << std::endl;
+    } else {
+        std::cout << "Greedy limitation test: Fail" << std::endl;
+        return 1;
+    }
     return 0;
 }
