@@ -1,7 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <vector>
-#include "greedy.h"
+#include "GreedyKnapsack.hpp"
 #include <fstream>
 
 int main () {
@@ -92,12 +92,12 @@ int main () {
             // I save one CSV row for this batch
             //Later, my team can calculate the median and variation for each size
             //and create graphs without manually copying numbers from the terminal
-            csv << n << "," << run << "," << averageTimeMiliseconds << "," << result.totalValue << "\n";
+            csv << n << "," << run << "," << averageTimeMiliseconds << "," << result.totalValue << std::endl;
         }
         
         //I print only after all 10 batches for this size are finished
         //This helps me see progress without adding printing time to the measurements
-        std::cout << "Finished benchmarking n = " << n << '\n';
+        std::cout << "Finished benchmarking n = " << n << std::endl;
 
 
         

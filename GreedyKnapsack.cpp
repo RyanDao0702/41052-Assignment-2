@@ -4,7 +4,7 @@
 #include <unordered_set>
 #include <stdexcept>
 #include <limits>
-#include "greedy.h"
+#include "GreedyKnapsack.hpp"
 
 //I put the greedy algorithm in its own function so I can call it using 
 //different test data and compare it with other two algorithms in my team

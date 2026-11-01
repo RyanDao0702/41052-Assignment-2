@@ -4,7 +4,7 @@
 #include <unordered_set>
 #include <stdexcept>
 #include <limits>
-#include "greedy.h"
+#include "GreedyKnapsack.hpp"
 
 
 
