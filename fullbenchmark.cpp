@@ -3,6 +3,7 @@
 #include <vector>
 #include "greedy.h"
 #include "DP\DPKnapsack.hpp"
+#include "FPTAS.hpp"
 #include <fstream>
 
 int main () {
@@ -12,7 +13,7 @@ int main () {
     //I write column names first, so it is easier to read the data later
     //n = number of items; run = batch number (each batch run Greedy 100 times); time_ms = average time per call
     //total_value = value returned by the Greedy algorithm
-    csv << "n,run, dp_time, greedy_time, dp_value, greedy_value" << std::endl;
+    csv << "n,run, dp_time, greedy_time, fptas_time, dp_value, greedy_value, fptas_value" << std::endl;
 
     //I want to see how the runtime changes as the number of items increases
     //I will test the same Greedy function with each of these five input sizes
@@ -26,6 +27,7 @@ int main () {
         std::vector<Item> items;
         std::vector<int> itemValues;
         std::vector<int> itemWeights;
+        std::vector<FPTASItem> fptasItems;
 
         //I create exactly n items. Each item has an ID, weight, and value
         //the modulo makes the weights and values follow a repeating pattern
@@ -48,6 +50,8 @@ int main () {
             items.push_back({i, weight, value});
             itemValues.push_back(value);
             itemWeights.push_back(weight);
+
+            fptasItems.push_back({ weight, static_cast<int>(value) });
         } 
          
 
@@ -64,13 +68,14 @@ int main () {
         //It also lets me save the returned total value alongside the timing
         GreedyResult greedyResult;
         DPResult dpResult;
+        std::vector<int> fptasResult;
+        double epsilon = 0.2;
 
         //I run Greedy 10 times before measuring anything
         //These warm-up calls can reduce some first-run effects
         //I do not include their runtime in the CSV results
         for (int i =0; i < 10; i++) {
             greedyResult = greedyKnapsack(items, capacity);
-            
         }
 
         //For each input size, I collect 10 seperate timing batches
@@ -110,12 +115,28 @@ int main () {
             
             double averageTimeMilisecondsDP= totalTimeMilisconds / 100.0;
 
+            //repeat with FPTAS
+            start = std::chrono::steady_clock::now();
+            for (int i = 0; i < 100; i++) {
+                fptasResult = knapsackFPTAS(fptasItems, capacity, epsilon);
+            }
+            end = std::chrono::steady_clock::now();
+            double totalTimeMilisecondsFPTAS = std::chrono::duration<double, std::milli>(end - start).count();
+
+            double averageTimeMilisecondsFPTAS = totalTimeMilisconds / 100.0;
+
+            int fptasTotalValue = 0;
+
+            for (int index : fptasResult) {
+                fptasTotalValue += fptasItems[index].value;
+            }
+
             // I save one CSV row for this batch
             //Later, my team can calculate the median and variation for each size
             //and create graphs without manually copying numbers from the terminal
             csv << n << "," << run << "," << 
-            averageTimeMilisecondsDP << "," << averageTimeMilisecondsGreedy << ","
-            << dpResult.totalValue << "," << greedyResult.totalValue << "\n";
+            averageTimeMilisecondsDP << "," << averageTimeMilisecondsGreedy << "," << averageTimeMilisecondsFPTAS << ","
+            << dpResult.totalValue << "," << greedyResult.totalValue << "," << fptasTotalValue << "," << "epsilon" << "\n";
         }
         
         //I print only after all 10 batches for this size are finished

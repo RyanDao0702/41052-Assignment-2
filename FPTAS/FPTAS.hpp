@@ -6,7 +6,7 @@
 #include <vector>
 
 // Represents an item in the knapsack problem.
-struct FTPASItem {
+struct FPTASItem {
     int weight;
     int value;
 };
