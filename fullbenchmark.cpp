@@ -1,7 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <vector>
-#include "greedy.h"
+#include "GreedyKnapsack.hpp"
 #include "DP\DPKnapsack.hpp"
 #include "FPTAS\FPTAS.hpp"
 #include <fstream>
