@@ -104,7 +104,7 @@ int main() {
 
     //I repeat the whole test 100 times
     //Each round creates new items and a new capacity
-    for (int testNum = 1; testNum <= 100; testNum++) {
+    for (int testNum = 1; testNum <= 1000; testNum++) {
         std::vector<Item> items;
 
         //I create 10 items for each test
@@ -188,7 +188,7 @@ int main() {
     }
 
     // I print how many times Greedy found the optimal value.
-    std::cout << "Optimal Solutions: " << bestCount << " / 100" << std::endl;
+    std::cout << "Optimal Solutions: " << bestCount << " / 1000" << std::endl;
 
     //I only reach this line if none of the validity checks failed
     std::cout << "All 100 random tests: Pass" << std::endl;
