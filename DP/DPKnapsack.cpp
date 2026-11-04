@@ -5,7 +5,7 @@
 #include <iostream>
 
 //Version that returns a DPResult (with total value, total weight and chosen items) - For benchmarking against the others which return the same things
-DPResult dpKnapsack(const std::vector<int>& weights, const std::vector<int>& values, int capacity) {
+DPResult dpKnapsack(const std::vector<int>& weights, const std::vector<long long>& values, int capacity) {
     if (weights.size() != values.size()) return {};
 
     std::vector<std::vector<int>> dp (weights.size() + 1, std::vector<int>(capacity + 1, 0));
@@ -60,7 +60,7 @@ DPResult dpKnapsack(const std::vector<int>& weights, const std::vector<int>& val
 }
 
 //Knapsack - Take a list of weights and values, and a capacity: return just the maximum total value
-int knapsack(const std::vector<int>& weights, const std::vector<int>& values, int capacity) {
+int knapsack(const std::vector<int>& weights, const std::vector<long long>& values, int capacity) {
 
     if (weights.size() != values.size()) return -1;
 
@@ -103,7 +103,7 @@ int knapsack(const std::vector<int>& weights, const std::vector<int>& values, in
 }
 
 //Return the items that are taken for the maximum value
-std::vector<int> knapsackItems(const std::vector<int>& weights, const std::vector<int>& values, int capacity) {
+std::vector<int> knapsackItems(const std::vector<int>& weights, const std::vector<long long>& values, int capacity) {
 
     if (weights.size() != values.size()) return {};
 

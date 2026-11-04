@@ -32,17 +32,19 @@ void testKnapsack(
 
 int main() {
 
-    testKnapsack({}, {}, 10, 0);
+    // testKnapsack({}, {}, 10, 0);
 
-    testKnapsack({2, 3, 4}, {3, 4, 5}, 5, 7);
+    // testKnapsack({2, 3, 4}, {3, 4, 5}, 5, 7);
 
-    testKnapsack({5}, {10}, 4, 0);
+    // testKnapsack({5}, {10}, 4, 0);
 
-    testKnapsack({5}, {10}, 5, 10);
+    // testKnapsack({5}, {10}, 5, 10);
 
-    testKnapsack({1, 1, 1}, {2, 3, 4}, 2, 7);
+    // testKnapsack({1, 1, 1}, {2, 3, 4}, 2, 7);
 
-    testKnapsack({2, 3}, {0, 0}, 5, 0);
+    // testKnapsack({2, 3}, {0, 0}, 5, 0);
+
+    testKnapsack({51, 50, 50}, {102, 99, 99}, 10, 0);
 
     return 0;
 }

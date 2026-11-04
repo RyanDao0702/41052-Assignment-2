@@ -7,11 +7,11 @@ struct DPResult{
 };
 
 //Knapsack
-DPResult dpKnapsack(const std::vector<int>& weights, const std::vector<int>& values, int capacity);
+DPResult dpKnapsack(const std::vector<int>& weights, const std::vector<long long>& values, int capacity);
 
 //Maximum value
-int knapsack(const std::vector<int>& weights, const std::vector<int>& values, int capacity);
+int knapsack(const std::vector<int>& weights, const std::vector<long long>& values, int capacity);
 
 //Which items were taken for the maximum value
-std::vector<int> knapsackItems(const std::vector<int>& weights, const std::vector<int>& values, int capacity);
+std::vector<int> knapsackItems(const std::vector<int>& weights, const std::vector<long long>& values, int capacity);
 

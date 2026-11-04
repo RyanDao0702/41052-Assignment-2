@@ -9,7 +9,7 @@
 
 int main () {
     //I create a CSV file (Excel) so my team can see the raw timing result
-    std::ofstream csv("randomBenchmarkSmall.csv");
+    std::ofstream csv("randomBenchmark.csv");
 
     //I write column names first, so it is easier to read the data later
     //n = number of items; run = batch number, time_ms = average time per call
@@ -21,7 +21,8 @@ int main () {
     //Use a fixed seed for randomly generating numbers to make each run of the benchmark the same (for comparing benchmarks)
     std::mt19937 gen(42);
 
-    //Test with every combination of 5 sizes and 3 capacities
+    //Test with every combination of sizes and capacities
+    //When testing without FPTAS, more sizes can be added
     std::vector<int> sizes = {100, 500, 1000};
     std::vector<int> capacities = {100, 1000, 10000};
 
@@ -46,7 +47,7 @@ int main () {
             //I create the input before starting the timer
             //This means the time spent generating items is NOT part of the runtime result
             std::vector<Item> items;
-            std::vector<int> itemValues;
+            std::vector<long long> itemValues;
             std::vector<int> itemWeights;
             std::vector<FPTASItem> fptasItems;
 

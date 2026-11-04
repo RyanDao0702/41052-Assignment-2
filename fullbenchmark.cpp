@@ -25,7 +25,7 @@ int main () {
         //I create the input before starting the timer
         //This means the time spent generating items is NOT part of the runtime result
         std::vector<Item> items;
-        std::vector<int> itemValues;
+        std::vector<long long> itemValues;
         std::vector<int> itemWeights;
         std::vector<FPTASItem> fptasItems;
 
